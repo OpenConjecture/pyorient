@@ -17,7 +17,7 @@ Pyorient works with orientdb versions from 1.7 to 2.x.
 
 ## Installation
 
-	pip install pyorient
+	pip install --upgrade git+https://github.com/OpenConjecture/pyorient.git
 
 ## Documentation
 
