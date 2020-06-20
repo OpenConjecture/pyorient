@@ -97,10 +97,12 @@ class OrientSocket(object):
                 )
 
             self.protocol = struct.unpack('!h', _value)[0]
-            if self.protocol > SUPPORTED_PROTOCOL:
-                raise PyOrientWrongProtocolVersionException(
-                    "Protocol version " + str(self.protocol) +
-                    " is not supported yet by this client.", [])
+            # Note: Commenting to remove protocol dependency
+            # - Reference: https://github.com/orientechnologies/pyorient/issues/27
+            # if self.protocol > SUPPORTED_PROTOCOL:
+            #     raise PyOrientWrongProtocolVersionException(
+            #         "Protocol version " + str(self.protocol) +
+            #         " is not supported yet by this client.", [])
             self.connected = True
         except socket.error as e:
             self.connected = False
@@ -417,9 +419,9 @@ class OrientDB(object):
         self.nodes = nodes
 
         # store property id->property name, type map for binary serialization
-        
+
         self.update_properties()
-        
+
         return self.clusters
 
     def db_reload(self):
@@ -434,7 +436,7 @@ class OrientDB(object):
         self.update_properties()
         return self.clusters
 
-        
+
     def update_properties(self):
         '''
         This method fetches the global Properties from the server. The properties are used
@@ -446,7 +448,7 @@ class OrientDB(object):
         if self._serialization_type==OrientSerialization.Binary:
             self._connection._props = {x['id']:[x['name'], type_map[x['type']]] for x in
                         self.command("select from #0:1")[0].oRecordData['globalProperties']}
-        
+
     def shutdown(self, *args):
         return self.get_message("ShutdownMessage") \
             .prepare(args).send().fetch_response()
