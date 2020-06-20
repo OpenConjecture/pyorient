@@ -46,8 +46,10 @@ Pyorient works with orientdb versions from 1.7 to 2.x.
 PyOrient is composed of two layers. At its foundation is the python wrapper around OrientDB's binary protocol. Built upon that - and OrientDB's own SQL language - is the Object-Graph Mapper (or OGM). The OGM layer is documented separately.
 
 ### Init the client
+Note: Must use session tokens.
 ```python
 client = pyorient.OrientDB("localhost", 2424)
+client.set_session_token(True)
 session_id = client.connect( "admin", "admin" )
 ```
 
